@@ -18,6 +18,7 @@ namespace Bot_Application1
         {
             if (activity.Type == ActivityTypes.Message)
             {
+                //Hello
                 await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
             }
             else
