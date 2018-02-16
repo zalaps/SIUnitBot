@@ -4,12 +4,17 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using Bot_Application1.Dialogs;
 
 namespace Bot_Application1
 {
     [BotAuthentication]
     public class MessagesController : ApiController
     {
+        internal static IDialog<object> MakeRoot()
+        {
+            return Chain.From(() => new DefaultLuisDialog());
+        }
         /// <summary>
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
@@ -18,8 +23,7 @@ namespace Bot_Application1
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                //Hello
-                await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+                await Conversation.SendAsync(activity, MakeRoot);
             }
             else
             {
